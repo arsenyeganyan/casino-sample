@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inconsolata', monospace;
+    font-family: 'Lora', serif;
+    font-family: 'Raleway', sans-serif;
+}
+
+:root{
+    --LIGHT-BLACK: rgb(73, 73, 73);
+    --RED: rgb(255, 89, 89);
+    --DARK-RED: #D43535;
+    --DARK-WHITE: rgb(215, 215, 215);
+}

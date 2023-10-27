@@ -1,0 +1,9 @@
+.homepage--container{
+    height: 100vh;
+    background-image: url(/public/assets/home-background.jpg);
+    background-size: 120rem;
+
+    & div{
+        color: white;
+    }
+}
