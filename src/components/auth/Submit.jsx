@@ -7,6 +7,7 @@ const ACTION_TYPES = {
   SET_FORM: "FORM",
   SET_CHECK: "CHECK",
   SET_CODE: "CODE",
+  SET_RETURN_VAL: "RETURN_VAL",
 };
 
 const reducer = (state, action) => {
@@ -31,6 +32,11 @@ const reducer = (state, action) => {
         ...state,
         code: action.payload
       }
+    case ACTION_TYPES.SET_RETURN_VAL:
+      return {
+        ...state,
+        returnVal: action.payload
+      }
   }
 }
   
@@ -41,16 +47,16 @@ const reducer = (state, action) => {
     form: '',
     check: false,
     code: null,
+    returnVal: {},
   });
 
+  //resolves the code promise
   useEffect(() => {
-    result?.result1.then(res => {
-      dispatch({ type: ACTION_TYPES.SET_CODE, payload: res.code });
-    })
-  }, [result]);
+      dispatch({ type: ACTION_TYPES.SET_CODE, payload: result?.res.code });
+    }, [result?.res]);
 
-  async function handleCheck(e) {
-    e.preventDefault();
+  //hadnles 2-FA and the outgoing request after submitting
+  async function handleCheck() {
     dispatch({ type: ACTION_TYPES.SET_CHECK });
 
     const dataObj = {
@@ -60,7 +66,10 @@ const reducer = (state, action) => {
       status: "Verified",
     }
     
-    if(Number(state.form) === state.code) {
+    console.log(state.form);
+    console.log(state.code);
+
+    if(state.form != state.code) {
       return { msg: "Code provided is invalid!" };
     }
 
@@ -78,9 +87,9 @@ const reducer = (state, action) => {
         throw new Error(`HTTP error! Status: ${res2.status}`);
       }
 
-      const result2 = res2.json();
-      console.log(result2);
-      return result2;
+      if(res2.json()) {
+        return { status: res2.status };
+      }
     } catch(err) {
       console.error(err);
     }
@@ -88,8 +97,23 @@ const reducer = (state, action) => {
 
   return (
     <div className='code--input--container'>
-        {result && (
-          <form id="form" onSubmit={handleCheck}>
+        {
+          result && 
+          !result?.hasOwnProperty("msg") && 
+          !result?.res?.hasOwnProperty("status") && (
+            <form
+              id="form"
+              onSubmit={(e) => {
+                e.preventDefault();
+
+                const returnVal = handleCheck();
+                console.log(returnVal);
+                returnVal?.then(res => {
+                  dispatch({ type: ACTION_TYPES.SET_RETURN_VAL, payload: res });
+                  console.log(res);
+                })
+              }}
+            >
               <div className="input--field">
                 <input
                     type="text"
@@ -103,9 +127,17 @@ const reducer = (state, action) => {
                 />
                 <label htmlFor="code">6-digit number</label>
               </div>
-              {((Number(state.form) === state.code) && state.check) && <Navigate to='/'/>}
-          </form>
-        )}
+              {(
+                state.check && 
+                state.returnVal?.hasOwnProperty("status")
+              ) && 
+                <Navigate to='/'/>
+              }
+              {state.returnVal?.hasOwnProperty("msg") &&
+                (<div className="msg">{state.returnVal.msg}</div>)}
+            </form>
+          )
+        }
     </div>
   )
 }

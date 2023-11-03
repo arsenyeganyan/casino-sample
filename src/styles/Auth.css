@@ -1,3 +1,5 @@
+/* Login, Signup, Submit */
+
 .auth{
     margin: 0;
     padding: 0;
@@ -52,6 +54,15 @@
             pointer-events: none;
             color: var(--DARK-WHITE);
         }
+
+        .eye--slash{
+            position: absolute;
+            font-size: 20px;
+            right: 10px;
+            top: 10px;
+            color: var(--RED);
+            cursor: pointer;
+        }
     }
     
     & input{
@@ -80,6 +91,12 @@
             background: var(--DARK-RED);
         }
     }
+}
+
+.msg{
+    text-align: center;
+    color: var(--RED);
+    font-size: 17px;
 }
 
 @media(max-width: 1440px) {
