@@ -45,7 +45,8 @@ export async function action({ params, request }){
       result1,
     };
   } catch(err) {
-    console.error("An error occured: ", err);
+    // console.error("An error occured: ", err);
+    throw err;
   }
 }
 
@@ -59,70 +60,70 @@ export default function Signup() {
     <div className="auth">
       <div className="auth--page">
         <div className="auth--title">Sign up</div>
-        {(
-          result === undefined || 
+        {(result === undefined || 
           result?.hasOwnProperty("msg") || 
           result?.result1?.hasOwnProperty("status")) && (
-          <Form id="form" method="POST">
-            <div className="input--field">
-              <input 
-                type="text" 
-                required 
-                name="username"
-                placeholder=""
-              />
-              <label htmlFor="username">Username</label>
-            </div>
-            <div className="input--field">
-              <input
-                type="email"
-                required
-                name="email"
-                placeholder=""
-              />
-              <label htmlFor="email">Email</label>
-            </div>
-            <div className="input--field">
-              <input 
-                type={eye ? "password" : "text"}
-                required
-                name="password"
-                minLength="8"
-                maxLength="20"
-                placeholder=""
-              />
-              <label htmlFor="password">Password</label>
-              <div onClick={() => setEye(!eye)}>
-                {eye ? 
-                  (<FontAwesomeIcon icon={faEyeSlash} className="eye--slash"/>) : 
-                  (<FontAwesomeIcon icon={faEye} className="eye--slash"/>)
-                }
+            <Form id="form" method="POST">
+              <div className="input--field">
+                <input 
+                  type="text" 
+                  required 
+                  name="username"
+                  placeholder=""
+                />
+                <label htmlFor="username">Username</label>
               </div>
-            </div>
-            <div className="input--field">
-              <input 
-                type={eye ? "password" : "text"}
-                required 
-                name="re-password"
-                minLength="8"
-                maxLength="20"
-                placeholder=""
-              />
-              <label htmlFor="re-password">Re-enter password</label>
-              <div onClick={() => setEye(!eye)}>
-                {eye ? 
-                  (<FontAwesomeIcon icon={faEyeSlash} className="eye--slash"/>) :
-                  (<FontAwesomeIcon icon={faEye} className="eye--slash"/>)
-                }
+              <div className="input--field">
+                <input
+                  type="email"
+                  required
+                  name="email"
+                  placeholder=""
+                />
+                <label htmlFor="email">Email</label>
               </div>
-            </div>
-            {result?.hasOwnProperty("msg") && (<div className="msg">{result.msg}</div>)}
-            {result?.result1?.hasOwnProperty("status") && 
-              (<div className="msg">User already exists! Try another usename.</div>)
-            }
-            <button>Continue</button>
-          </Form>
-        )}
+              <div className="input--field">
+                <input 
+                  type={eye ? "password" : "text"}
+                  required
+                  name="password"
+                  minLength="8"
+                  maxLength="20"
+                  placeholder=""
+                />
+                <label htmlFor="password">Password</label>
+                <div onClick={() => setEye(!eye)}>
+                  {eye ? 
+                    (<FontAwesomeIcon icon={faEyeSlash} className="eye--slash"/>) : 
+                    (<FontAwesomeIcon icon={faEye} className="eye--slash"/>)
+                  }
+                </div>
+              </div>
+              <div className="input--field">
+                <input 
+                  type={eye ? "password" : "text"}
+                  required 
+                  name="re-password"
+                  minLength="8"
+                  maxLength="20"
+                  placeholder=""
+                />
+                <label htmlFor="re-password">Re-enter password</label>
+                <div onClick={() => setEye(!eye)}>
+                  {eye ? 
+                    (<FontAwesomeIcon icon={faEyeSlash} className="eye--slash"/>) :
+                    (<FontAwesomeIcon icon={faEye} className="eye--slash"/>)
+                  }
+                </div>
+              </div>
+              {result?.hasOwnProperty("msg") && (<div className="msg">{result.msg}</div>)}
+              {result?.result1?.hasOwnProperty("status") && 
+                (<div className="msg">User already exists! Try another usename.</div>)
+              }
+              <button>Continue</button>
+            </Form>
+          )
+        }
         <Outlet context={{ result }}/>
       </div>
     </div>

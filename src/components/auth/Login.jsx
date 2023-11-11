@@ -8,8 +8,8 @@ export async function action({ params, request }) {
   try {
     const formData = await request.formData();
 
-    const username = formData.get("username");
-    const password = formData.get("password");
+    const username = formData.get('username');
+    const password = formData.get('password');
 
     const res = await fetch('http://localhost:8000/account/login/', {
       method: 'POST',
@@ -24,13 +24,15 @@ export async function action({ params, request }) {
     localStorage.setItem("token", result?.token);
     return result;
   } catch(err) {
-    console.error(err);
+    // console.error(err);
+    throw err;
   }
 }
 
 export default function Auth() {
   const result = useActionData();
   console.log(result);
+  
   const [eye, setEye] = useState(false);
 
   return (
