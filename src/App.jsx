@@ -3,11 +3,12 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Submit from "./components/auth/Submit";
 import Home from "./components/Home";
-import { 
+import Navbar from "./components/Navbar";
+import {
   RouterProvider,
   createBrowserRouter,
-  createRoutesFromElements, 
-  Route 
+  createRoutesFromElements,
+  Route
 } from "react-router-dom";
 import { action as signupAction } from "./components/auth/Signup";
 import { action as loginAction } from "./components/auth/Login";
