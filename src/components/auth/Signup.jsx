@@ -45,7 +45,6 @@ export async function action({ params, request }){
       result1,
     };
   } catch(err) {
-    // console.error("An error occured: ", err);
     throw err;
   }
 }

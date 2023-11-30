@@ -52,8 +52,8 @@ const reducer = (state, action) => {
 
   //resolves the code promise
   useEffect(() => {
-      dispatch({ type: ACTION_TYPES.SET_CODE, payload: result?.res.code });
-    }, [result?.res]);
+      dispatch({ type: ACTION_TYPES.SET_CODE, payload: result?.result1.code });
+    }, [result?.result1]);
 
   //hadnles 2-FA and the outgoing request after submitting
   async function handleCheck() {
@@ -100,7 +100,7 @@ const reducer = (state, action) => {
         {
           result && 
           !result?.hasOwnProperty("msg") && 
-          !result?.res?.hasOwnProperty("status") && (
+          !result?.result1?.hasOwnProperty("status") && (
             <form
               id="form"
               onSubmit={(e) => {
@@ -131,7 +131,7 @@ const reducer = (state, action) => {
                 state.check && 
                 state.returnVal?.hasOwnProperty("status")
               ) && 
-                <Navigate to='/'/>
+                <Navigate to='/auth/login'/>
               }
               {state.returnVal?.hasOwnProperty("msg") &&
                 (<div className="msg">{state.returnVal.msg}</div>)}

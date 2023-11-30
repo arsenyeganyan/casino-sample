@@ -1,80 +1,114 @@
 //frontend for this page is written by Aren Allahverdyan
 import '../styles/Home.css';
 import Navbar from './Navbar';
+import { Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStore } from '../store';
+import Cookies from 'js-cookie';
 
 export default function Home() {
-  const store = useStore();
-  const news = store.news;
-  const setNews = store.setNews;
+  const { 
+    news, 
+    setNews, 
+    games, 
+    setGames 
+  } = useStore();
 
-  useEffect(() => {
-    fetch('http://localhost:8000/sport/news/football')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setNews(data);
-      })
-  }, []);
+  console.log(Cookies.get('token'));
+  console.log(news);
+  console.log(games);
+
+  // || news.hasOwnProperty('detail') (will be mentioned below once error is fixed)
+  if(Cookies.get('token') === undefined) {
+    return (<Navigate to='/auth/login'/>);
+  } else {
+    useEffect(() => {
+        fetch('http://localhost:8000/sport/news/football/', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${Cookies.get('token')}`,
+                'Content-Type': 'application/json'
+            }
+        })
+          .then(res => {
+            if(!res.ok) {
+                throw new Error("Status code: " + res.status);
+            }
+            
+            return res.json();
+          })
+          .then(data => {
+            console.log(data);
+            setNews(data);
+          })
+          .catch(err => console.error(err))
+    
+        fetch('http://localhost:8000/sport/games/football/', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${Cookies.get('token')}`,
+                'Content-Type': 'application/json'
+            }
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            setGames(data);
+          })
+          .catch(err => console.error(err))
+      }, []);
+  }
 
   return(
     <div className='homepage--container'>
-    <Navbar />
-    <div className="game--list">
-        <div className="game--list--header">
-            <form>
-                <input type="search" placeholder="Search..." />
-                <button type="submit">
-                    <i className="fas fa-search"></i>
-                </button>
-              </form>
-            <p>Games</p>
-        </div>
-        <div className="games">
-            <div className="game">
-                <div className='teams'>
-                    <a className="team1">Al Nasar</a>
-                    <a className='team2'>FC Barcelona</a>
+        <Navbar />
+        <div className="game--list">
+            <div className="game--list--header">
+                <form>
+                    <input type="search" placeholder="Search..." />
+                    <button type="submit">
+                    </button>
+                </form>
+                <p>Games</p>
+            </div>
+            <div className='games--container'>
+                {games.map((g, index) => (
+                    <div className="game" key={index}>
+                        <div className='teams'>
+                            <div className="team1">{g.team1.name}</div>
+                            <div className="team2">{g.team2.name}</div>
+                        </div>
+                        <div className='info'>
+                            <p>{g.win}</p>
+                            <p>{g.draw}</p>
+                            <p>{g.lose}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div> 
+        <div className="list--news">
+            <div className="news--header">
+                <div className="news--header--text">
+                    Sport News
                 </div>
-                <div className='info'>
-                    <p className="kf">3.71</p>
-                    <p className="kf">1.54</p>
-                    <p className="kf">1.21</p>
+            </div>
+            <div className='news--container'>
+                <div className='news--box'>
+                    {news.map((n, index) => (
+                        <div className="news" key={index}>
+                            <img className="news--image" src={n.image} />
+                            <a className="news--title" href={n.title_url}>
+                                <br />{n.title}
+                            </a>      
+                            <p>
+                                {n.description}
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
-    </div> 
-    
-    <div className="list--news">
-        <div className="news--header">
-            <div className="news--header--text">
-                Sport News
-            </div>
-        </div>
-        <div className='news--container'>
-            {(news instanceof Array) ? news.map((n, index) => (
-                <div className="news" key={index}>
-                    <img className="news--image" src={n.image} />
-                    <a className="news--title" href={n.title_url}>
-                        <br />{n.title}
-                    </a>      
-                    <p>
-                        {n.description}
-                    </p>
-                </div>
-            )) : (<div>Loading News...</div>)}
-            {/* <div className="news">
-                <img className="news--image" src="https://sportnewsapi.snapi.dev/images/v1/g/y/01hesnr1z0rt6ahacqs8-42164.jpg" />
-                <a className="news--title">
-                    <br />Mikel Arteta sends Bukayo Saka message after latest injury concern
-                </a>       
-                <p>
-                    Saka withdrawn towards end of Champions League clash with Sevilla because of knockThe 22-year-old grabbed a goal and an assist to push Arsenal closer to knockout stagesLeandro Trossard opened the scoring to lead Gunners to three valuable points
-                </p>
-            </div> */}
-        </div>
-    </div>
     </div>
   )
 }

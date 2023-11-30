@@ -6,6 +6,8 @@
     & div{
         color: white;
     }
+    
+    overflow-y: hidden;
 }
 
 .header{
@@ -16,7 +18,8 @@
 .login{
     margin: 22px 10px;
     text-decoration: none;
-    color: #e1c330;
+    cursor: pointer;
+    color: var(--RED);
 }
 
 .login:hover{
@@ -42,7 +45,7 @@
 .header--text{
     font-size: 27px;
     margin: 15px;
-    color: #f2f3ec;
+    color: var(--RED);
 }
 
 .red{
@@ -73,12 +76,36 @@
     width: 30%;
 }
 
-.news--container{
+.news--box{
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 1rem;
+}
+
+.news--container{
     overflow-y: auto;
-    max-height: 10000px;
+    height: 85vh;
+}
+
+.games--container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.game{
+    opacity: 0.9;
+    border-radius: 5px;
+    margin-left: 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    flex-wrap: wrap;
+    border-right: 1px solid rgb(123, 123, 123); 
+    background-color: #414141;
+    cursor: pointer;
 }
 
 .game--list--header{
@@ -120,21 +147,6 @@
     color: #cecece;;
 }
 
-.game{
-    opacity: 0.9;
-    border-radius: 5px;
-    margin-left: 7px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 10px;
-    padding-bottom: 15px;
-    flex-wrap: wrap;
-    border-right: 1px solid rgb(123, 123, 123); 
-    background-color: #414141;
-}
-
 .game:nth-child(even) {
     background-color: #353535;
 }
@@ -145,7 +157,6 @@
 }
 
 .game a{
-    /* width: 600px; */
     font-size: 14px;
     margin: 8px 0 0 15px;
     color: #f3ebeb;
@@ -158,22 +169,17 @@
 }
 
 .teams{
-    position: absolute;
-    left: 0;
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
 
 .info{
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-self: flex-start;
     gap: 8px;
-
 }
 
-.info p.kf{
+.info p{
     border: 1px solid rgb(7, 0, 0);
     border-radius: 8px;
     padding: 3px;
@@ -186,7 +192,6 @@
 
 .news{
     overflow-y: scroll;
-    /* gap: 40px; */
 }
 
 .news--header{
@@ -245,7 +250,6 @@
     color: #f3ebeb;
     font-size: 13px;
 }
-
 
 .navbar{
     z-index: 1;

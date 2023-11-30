@@ -1,8 +1,9 @@
 import '../../styles/Auth.css';
-import { useState } from 'react';
-import { useActionData, Form, Navigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useActionData, Form, Navigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/fontawesome-free-solid";
+import Cookies from 'js-cookie';
 
 export async function action({ params, request }) {
   try {
@@ -21,19 +22,38 @@ export async function action({ params, request }) {
     })
 
     const result = await res.json();
-    localStorage.setItem("token", result?.token);
+
+    if(result?.token) {
+      const now = new Date();
+      const expirationTime = new Date(now.getTime() + 15 * 60 * 1000);
+    
+      Cookies.set("user", username, { secure: true, expires: expirationTime });
+      Cookies.set("token", result?.token, { secure: true, expires: expirationTime });
+    }
+    
     return result;
   } catch(err) {
-    // console.error(err);
     throw err;
   }
 }
 
 export default function Auth() {
   const result = useActionData();
-  console.log(result);
-  
   const [eye, setEye] = useState(false);
+  const [isRendered, setIsRendered] = useState(false);
+
+  useEffect(() => {
+    if(result) {
+      const delay = 500;
+  
+      const timeoutId = setTimeout(() => {
+        setIsRendered(true);
+      }, delay);
+  
+      return () => clearTimeout(timeoutId);
+    }
+  }, []);
+  
 
   return (
     <div className="auth">
@@ -68,8 +88,12 @@ export default function Auth() {
             </div>
             <button>Continue</button>
           </Form>
+          {result?.hasOwnProperty("msg") && (<div className="msg">{result.msg}</div>)}
+          <div className="msg">
+            Don't have an account? <Link className="msg" to='/auth/signup'>Sign up</Link>
+          </div>
       </div>
-      {result && <Navigate to='/'/>}
+      {result && isRendered && <Navigate to='/'/>}
     </div>
   )
 }
