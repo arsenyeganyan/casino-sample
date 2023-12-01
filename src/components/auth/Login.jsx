@@ -26,7 +26,7 @@ export async function action({ params, request }) {
     if(result?.token) {
       const now = new Date();
       const expirationTime = new Date(now.getTime() + 15 * 60 * 1000);
-    
+
       Cookies.set("user", username, { secure: true, expires: expirationTime });
       Cookies.set("token", result?.token, { secure: true, expires: expirationTime });
     }
@@ -36,25 +36,11 @@ export async function action({ params, request }) {
     throw err;
   }
 }
-
+//
 export default function Auth() {
   const result = useActionData();
   const [eye, setEye] = useState(false);
-  const [isRendered, setIsRendered] = useState(false);
-
-  useEffect(() => {
-    if(result) {
-      const delay = 500;
   
-      const timeoutId = setTimeout(() => {
-        setIsRendered(true);
-      }, delay);
-  
-      return () => clearTimeout(timeoutId);
-    }
-  }, []);
-  
-
   return (
     <div className="auth">
       <div className="auth--page">
@@ -93,7 +79,7 @@ export default function Auth() {
             Don't have an account? <Link className="msg" to='/auth/signup'>Sign up</Link>
           </div>
       </div>
-      {result && isRendered && <Navigate to='/'/>}
+      {(result && Cookies.get('token')) && <Navigate to='/'/>}
     </div>
   )
 }
