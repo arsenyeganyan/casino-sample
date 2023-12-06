@@ -2,12 +2,11 @@
     height: 100vh;
     background-image: url(/public/assets/home-background.jpg);
     background-size: 120rem;
+    overflow-y: hidden;
 
     & div{
         color: white;
     }
-    
-    overflow-y: hidden;
 }
 
 .header{
@@ -19,7 +18,7 @@
     margin: 22px 10px;
     text-decoration: none;
     cursor: pointer;
-    color: var(--RED);
+    color: white;
 }
 
 .login:hover{
@@ -106,6 +105,7 @@
     border-right: 1px solid rgb(123, 123, 123); 
     background-color: #414141;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .game--list--header{

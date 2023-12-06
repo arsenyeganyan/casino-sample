@@ -1,7 +1,7 @@
 //frontend for this page is written by Aren Allahverdyan
 import '../styles/Home.css';
 import Navbar from './Navbar';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStore } from '../store';
 import Cookies from 'js-cookie';
@@ -18,8 +18,7 @@ export default function Home() {
   console.log(news);
   console.log(games);
 
-  // || news.hasOwnProperty('detail') (will be mentioned below once error is fixed)
-  if(Cookies.get('token') === undefined) {
+  if(Cookies.get('token') === undefined || news.hasOwnProperty('detail')) {
     return (<Navigate to='/auth/login'/>);
   } else {
     useEffect(() => {
@@ -73,8 +72,8 @@ export default function Home() {
             </div>
             <div className='games--container'>
                 {games.map((g, index) => (
-                    <div className="game" key={index}>
-                        <div className='teams'>
+                    <Link className="game" key={index} to={`/${g.id}`}>
+                        <div className='teams' >
                             <div className="team1">{g.team1.name}</div>
                             <div className="team2">{g.team2.name}</div>
                         </div>
@@ -83,7 +82,7 @@ export default function Home() {
                             <p>{g.draw}</p>
                             <p>{g.lose}</p>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div> 

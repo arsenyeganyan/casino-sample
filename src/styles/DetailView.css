@@ -1,0 +1,65 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.detail--view--container{
+    height: 100vh;
+    background-size: 120rem;
+    background-image: url(/public/assets/home-background.jpg);
+    color: white;
+    padding: 1rem 1rem 0;
+
+    & .game--overview{
+        background-color: rgba(128, 128, 128, .3);
+        width: max-content;
+        padding: 2rem;
+        border-radius: 8px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+
+        .game--date{
+            text-align: center;
+        }
+
+        .teams--detail{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-size: 22px;
+        }
+
+        & .bets{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 15rem;
+
+            & div{
+                background: var(--RED);
+                padding: 8px;
+                cursor: pointer;
+                border-radius: 8px; 
+
+                &:hover{
+                    background: var(--DARK-RED);
+                    transition: 0.3s;
+                }
+            }
+        }
+
+        & .players{
+            background-color: rgba(128, 128, 128, .3);
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            gap: 5.5rem;
+            border-radius: 8px;
+        }
+    }
+
+}

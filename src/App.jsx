@@ -3,7 +3,7 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Submit from "./components/auth/Submit";
 import Home from "./components/Home";
-import Navbar from "./components/Navbar";
+import DetailView from "./components/DetailView";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -16,7 +16,8 @@ import { action as loginAction } from "./components/auth/Login";
 export default function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/">
-      <Route index element={<Home />}/>
+      <Route index element={<Home />} />
+      <Route path=":gameId" element={<DetailView />} />
       <Route path="auth">
         <Route path="login" element={<Login />} action={loginAction}/>
         <Route path="signup" element={<Signup />} action={signupAction}>
