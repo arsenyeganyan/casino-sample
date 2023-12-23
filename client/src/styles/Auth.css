@@ -1,0 +1,106 @@
+/* Login, Signup, Submit */
+
+.auth{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url(/public/assets/auth-background-image.jpg);
+    background-size: 120rem;
+    padding-top: 10rem;
+}
+
+.auth--page, #form input, #form button{
+    border-radius: 8px;
+    border: 2px solid black !important;
+}
+
+.auth--page, #form{
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    margin: auto;
+}
+
+.auth--page{
+    width: max-content;
+    max-height: max-content;
+    padding: 3rem 7rem;
+    background-color: rgba(73, 73, 73, 0.7);
+}
+
+.auth--title{
+    margin: auto;
+    color: var(--RED);
+    font-size: 40px;
+}
+
+#form{
+    & input, button{
+        width: max-content;
+        font-size: 23px;
+        padding: 8px;
+        border: none;
+    }
+
+    & .input--field{
+        position: relative;
+        
+        & label{
+            color: white;
+            position: absolute;
+            font-size: 20px;
+            left: 0;
+            top: 15px;
+            pointer-events: none;
+            color: var(--DARK-WHITE);
+        }
+
+        .eye--slash{
+            position: absolute;
+            font-size: 20px;
+            right: 10px;
+            top: 10px;
+            color: var(--RED);
+            cursor: pointer;
+        }
+    }
+    
+    & input{
+        outline: none;
+        background: transparent;
+        border: none !important;
+        border-bottom: 2px solid var(--DARK-WHITE) !important;
+        border-radius: 0 !important;
+        color: white;
+    }
+
+    & input:focus + label,
+      input:not(:placeholder-shown) + label{
+        transition: 0.4s;
+        top: -16px;
+        font-size: 15px;
+    }
+
+    & button{
+        background: var(--RED);
+        align-self: center;
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover{
+            background: var(--DARK-RED);
+        }
+    }
+}
+
+.msg{
+    text-align: center;
+    color: var(--RED);
+    font-size: 17px;
+}
+
+@media(max-width: 1440px) {
+    .auth{
+        background-size: 90rem;
+    }
+}
