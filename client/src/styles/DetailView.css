@@ -124,6 +124,11 @@
             gap: 5.5rem;
             border-radius: 8px;
         }
+
+        & .player {
+            text-decoration: none;
+            color: white;
+        }
     }
 
 }

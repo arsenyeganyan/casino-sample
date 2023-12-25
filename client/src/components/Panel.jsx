@@ -1,6 +1,8 @@
-import '../styles/PlaceBet.css';
+import '../styles/Panel.css';
 import { useParams, Form, useActionData } from "react-router-dom";
 import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import PlayerDetail from './PlayerDetail';
 
 export async function action({ params, request }) {
   try {
@@ -23,21 +25,33 @@ export async function action({ params, request }) {
   }
 }
 
-export default function PlaceBet() {
-  const params = useParams();
+export default function Panel() {
+  const { panelId } = useParams();
+  console.log(Number(panelId));
 
   const result = useActionData();
   console.log(result);
+
+  const [outlet, setOutlet] = useState('');
+  console.log(outlet);
+
+  useEffect(() => {
+    if(!isNaN(Number(panelId))) {
+      setOutlet('bet');
+    } else {
+      setOutlet('detail');
+    }
+  }, [panelId]);
 
   if(Cookies.get('token') === undefined) {
     return (<Navigate to="/auth/login"/>);
   }
   return (
-    <div className="bet--placing--container">
-      {params.hasOwnProperty('betId') && (
-        <>
+    <div className="panel--container">
+      {(outlet == 'bet') && (
+        <div className='bet--placing--container'>
           <div className='bet--title'>Enter payment details and place a bet</div>
-          <div className='bet--detail'>Payment for bet x{betId}</div>
+          <div className='bet--detail'>Payment for bet x{panelId}</div>
           <Form method='post' className='form'>
             <input type='text' placeholder='John Doe' name='name'/>
             <input type='text' placeholder='Card Number' name='card'/>
@@ -49,8 +63,9 @@ export default function PlaceBet() {
             <input type="number" placeholder='Amount' name='amount'/>
             <button>Checkout</button>
           </Form>
-        </>
+        </div>
       )}
+      {(outlet == 'detail') && (<PlayerDetail playerId={panelId}/>)}
     </div>
   )
 }

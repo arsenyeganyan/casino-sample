@@ -50,3 +50,12 @@
         }
     }
 }
+
+.player--detail--container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(128, 128, 128, .3);
+    padding: 1rem;
+    border-radius: 6px;
+}
