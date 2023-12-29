@@ -1,5 +1,5 @@
 import '../../styles/Auth.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useActionData, Form, Navigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/fontawesome-free-solid";
@@ -23,15 +23,24 @@ export async function action({ params, request }) {
 
     const result = await res.json();
 
+    if(res.status === 400) {
+      return { msg: "Wrong username or password!" };
+    }
+
+    if(!res.ok) {
+      throw Error('Status code: ', res.status);
+    }
+
     if(result?.token) {
       const now = new Date();
-      const expirationTime = new Date(now.getTime() + 15 * 60 * 1000);
+      const expirationTime = new Date(now.getTime() + 60 * 60 * 1000);
 
       Cookies.set("user", username, { secure: true, expires: expirationTime });
+      Cookies.set("profilePic", result?.profile_picture_url, { secure: true, expires: expirationTime });
       Cookies.set("token", result?.token, { secure: true, expires: expirationTime });
+
+      return result;
     }
-    
-    return result;
   } catch(err) {
     throw err;
   }
@@ -41,6 +50,10 @@ export default function Auth() {
   const result = useActionData();
   const [eye, setEye] = useState(false);
   
+  if(result && Cookies.get('token')) {
+    return (<Navigate to='/'/>)
+  }
+
   return (
     <div className="auth">
       <div className="auth--page">
@@ -79,7 +92,6 @@ export default function Auth() {
             Don't have an account? <Link className="msg" to='/auth/signup'>Sign up</Link>
           </div>
       </div>
-      {(result && Cookies.get('token')) && <Navigate to='/'/>}
     </div>
   )
 }

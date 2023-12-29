@@ -20,6 +20,18 @@ const store = (set) => ({
         set((store) => {
             store.gameDetail = state
         }, false, "setGameDetail"),
+    
+    checkout: false,
+    setCheckout: (state) => 
+        set((store) => {
+            store.checkout = state
+        }, false, "setCheckout"),
+
+    player: {},
+    setPlayer: (state) =>
+        set((store) => {
+            store.player = state
+        }, false, "setPlayer"),
 });
 
 export const useStore = create(

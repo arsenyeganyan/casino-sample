@@ -14,16 +14,88 @@
     flex-direction: row;
 }
 
-.login{
-    margin: 22px 10px;
-    text-decoration: none;
-    cursor: pointer;
-    color: white;
+.dont{
+    display: none;
 }
 
-.login:hover{
-    transition: 0.3s;
-    color: #fefff9;
+.settings--panel{
+    display: flex;
+    flex-direction: column;
+
+    & img{
+        width: 60px;
+        cursor: pointer;
+    }
+}
+
+.settings::before{
+    content: '';
+    position: absolute;
+    left: 140px;
+    top: -30px;
+    border: 15px solid transparent;
+    border-bottom-color: #414141;
+}
+
+.settings, .dont--pop{
+    transition: opacity 0.2s ease;
+    opacity: 0;
+    position: absolute;
+    top: 3rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #414141;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1;
+
+    & form{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+.settings{
+    opacity: 1;
+}
+
+.settings p, .settings div, .login{
+    cursor: pointer;
+    color: white;
+    width: max-content;
+
+    &:hover{
+        transition: 0.3s;
+        color: var(--RED);
+    }
+}
+
+.settings input{
+    border-radius: 3px;
+    padding: 3px;
+    border: none;
+}
+
+.username{
+    background: white;
+}
+
+.submit{
+    background: var(--RED);
+    border: none;
+    border-radius: 5px;
+    width: fit-content;
+    align-self: center;
+    padding: 4px;
+    cursor: pointer;
+
+    &:hover{
+        transition: 0.2s ease-out;
+        background: var(--DARK-RED);
+    }
 }
 
 .profile--picture{
@@ -32,6 +104,15 @@
     border-radius: 50%;
     margin: 5px 15px;
     opacity: 0.7;
+}
+
+.change--warning div{
+    color: var(--DARK-RED);
+    cursor: auto;
+
+    &:hover{
+        color: var(--DARK-RED);
+    }
 }
 
 .rank{
@@ -177,17 +258,23 @@
 .info{
     display: flex;
     gap: 8px;
-}
 
-.info p{
-    border: 1px solid rgb(7, 0, 0);
-    border-radius: 8px;
-    padding: 3px;
-    width: 50px;
-    text-align: center;
-    color: whitesmoke;
-    background-color: var(--RED);
-    font-size: 25px;
+    & .bet{
+        text-decoration: none;
+        font-weight: normal;
+        border: 1px solid rgb(7, 0, 0);
+        border-radius: 8px;
+        padding: 2px;
+        width: 50px;
+        text-align: center;
+        color: whitesmoke;
+        background-color: var(--RED);
+        font-size: 25px;
+
+        &:hover{
+            background: var(--DARK-RED);
+        }
+    }
 }
 
 .news{
@@ -240,7 +327,7 @@
 }
 
 .news--title:hover{
-    color: #e1c330;
+    color: var(--RED);
     transition: 0.3s;   
 }
 
