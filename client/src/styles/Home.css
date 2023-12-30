@@ -51,6 +51,10 @@
     padding: 10px;
     z-index: 1;
 
+    & .settings--link{
+        text-decoration: none;
+    }
+
     & form{
         display: flex;
         flex-direction: column;
@@ -62,7 +66,7 @@
     opacity: 1;
 }
 
-.settings p, .settings div, .login{
+.settings p, .settings div, .login, .settings--link{
     cursor: pointer;
     color: white;
     width: max-content;

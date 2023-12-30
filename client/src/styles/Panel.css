@@ -24,6 +24,12 @@
             border: 3px solid black;
             padding: 3px;
             font-size: 14px;
+
+            &:focus{
+                outline: none;
+                background: #aab7c4;
+                transition: 0.5s ease-out;
+            }
         }
 
         & input[type=number] {
@@ -52,6 +58,16 @@
                 transition: 0.2s;
             }
         }
+
+        .card--element--container{
+            width: 180%;
+            height: 2vh;
+        }
+
+    }
+
+    .bet--msg, .bet--link{
+        color: var(--RED);
     }
 }
 

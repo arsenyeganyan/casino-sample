@@ -104,6 +104,7 @@ export default function Navbar() {
               className='profile--pic'
             />
             <div className={isPopped ? "settings" : "dont--pop"}>
+              <Link className='settings--link' to='/payments'>Payment History</Link>
               <div onClick={() => setUsername(!username)}>Change username</div>
               <div onClick={() => setPp(!pp)}>Change profile picture</div>
               <form onSubmit={handleChange}>
